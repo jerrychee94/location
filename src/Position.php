@@ -7,6 +7,27 @@ use Illuminate\Contracts\Support\Arrayable;
 class Position implements Arrayable
 {
     /**
+     * Check Driver class.
+     *
+     * @var string|null
+     */
+    public $class;
+
+    /**
+     * Check whether the IP is coming from VPN.
+     *
+     * @var boolean|null
+     */
+    public $isProxy;
+
+    /**
+     * Check whether the IP is coming from server.
+     *
+     * @var boolean|null
+     */
+    public $isHosting;
+    
+    /**
      * The IP address used to retrieve the location.
      *
      * @var string
