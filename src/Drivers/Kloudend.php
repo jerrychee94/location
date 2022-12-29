@@ -6,14 +6,16 @@ use Exception;
 use Illuminate\Support\Fluent;
 use Stevebauman\Location\Position;
 
-class IpApi extends Driver
+class Kloudend extends Driver
 {
     /**
      * {@inheritdoc}
      */
     protected function url($ip)
     {
-        return "http://ip-api.com/json/$ip";
+        $token = config('location.kloudend.token', '');
+
+        return "https://ipapi.co/{$ip}/?key={$token}";
     }
 
     /**
@@ -21,15 +23,15 @@ class IpApi extends Driver
      */
     protected function hydrate(Position $position, Fluent $location)
     {
-        $position->countryName = $location->country;
-        $position->countryCode = $location->countryCode;
-        $position->regionCode = $location->region;
-        $position->regionName = $location->regionName;
+        $position->countryName = $location->country_name;
+        $position->countryCode = $location->country_code;
+        $position->regionCode = $location->region_code;
+        $position->regionName = $location->region;
         $position->cityName = $location->city;
-        $position->zipCode = $location->zip;
-        $position->latitude = (string) $location->lat;
-        $position->longitude = (string) $location->lon;
-        $position->areaCode = $location->region;
+        $position->zipCode = $location->postal;
+        $position->postalCode = $location->postal;
+        $position->latitude = (string) $location->latitude;
+        $position->longitude = (string) $location->longitude;
         $position->timezone = $location->timezone;
 
         return $position;
